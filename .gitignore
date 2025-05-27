@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+dist/
+build/
+
+# Virtual environment
+skinENV/
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+
+# Datasets
+dataset/
+*.h5
+*.npz
+
+
+#model
+model/
