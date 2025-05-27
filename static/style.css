@@ -1,0 +1,214 @@
+/* Define color variables */
+:root {
+    --bg-color: #ffc900;
+    --card-bg: #ffffff;
+    --text-color: #000000;
+    --textarea-bg: #ffffff;
+    --textarea-border: #ccc;
+    --prediction-bg: #f4f4f4;
+    --upload-bg: #000000;
+    --upload-text: #ffffff;
+    --clear-btn: #ff6666;
+    --submit-btn: #7c5fff;
+    --contact-btn: #2ecc71;
+    --loading-btn: #3498db;
+    --theme-button-bg: #1f2d4f;
+    --theme-button-text: #ffffff;
+}
+
+/* Dark mode overrides */
+body.dark {
+    --bg-color: #1e1e1e;
+    --card-bg: #2a2a2a;
+    --text-color: #ffffff;
+    --textarea-bg: #3a3a3a;
+    --textarea-border: #555;
+    --prediction-bg: #3a3a3a;
+    --upload-bg: #ffffff;
+    --upload-text: #000000;
+    --clear-btn: #ff4444;
+    --contact-btn: #2ecc71;
+    --loading-btn: #3498db;
+    --submit-btn: #6a4dff;
+    --theme-button-bg: #ffffff;
+    --theme-button-text: #000000;
+}
+
+/* General Styles */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.app-container {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 30px;
+    width: 70%;
+    height: 60vh;
+    max-height: 800px;
+    max-width: 300px;
+    min-height: 450px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.theme-toggle.top-left {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    z-index: 10;
+}
+
+.theme-toggle button {
+    background: var(--theme-button-bg);
+    color: var(--theme-button-text);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 30px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.upload-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 5px;
+    background-color: var(--upload-bg);
+    color: var(--upload-text);
+    padding: 14px;
+    font-weight: bold;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.upload-btn i {
+    margin-right: 10px;
+}
+
+.image-preview {
+    width: 100%;
+    min-height: 150px;
+    background: #f0f0f0;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-preview img {
+    width: 100%;
+    object-fit: cover;
+}
+
+label[for="suggestion"] {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+textarea {
+    border: 1px solid var(--textarea-border);
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 12px;
+    font-family: Arial;
+    resize: vertical;
+    background-color: var(--textarea-bg);
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.clear-btn,
+.submit-btn,
+.contact-btn{
+    flex: 1;
+    border: none;
+    padding: 12px 0;
+    font-size: 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+
+.clear-btn {
+    background-color: var(--clear-btn);
+}
+
+.submit-btn {
+    background-color: var(--submit-btn);
+}
+
+.prediction-box {
+    margin-bottom: 10px;
+    background: var(--prediction-bg);
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 12px;
+    color: var(--text-color);
+}
+
+.form-box {
+    height: 100%;
+    width: 100%;
+    border-radius: 12px;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+form {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.loading-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.post-submit-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.contact-btn {
+    background-color: var(--contact-btn);
+}
+
+.loading-btn {
+    background-color: var(--loading-btn);
+    border: none;
+    padding: 12px 0;
+    font-size: 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Skin Disease Classifier</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="theme-toggle top-left">
+        <button id="toggle-theme">
+            <i class="fa-solid fa-moon"></i> NIGHT
+        </button>
+    </div>
+    <div class="app-container">
+
+        <div class="form-box">
+            <form method="POST" enctype="multipart/form-data">
+                <label class="upload-btn">
+                    <i class="fa-solid fa-camera"></i> UPLOAD IMAGE
+                    <input type="file" name="image" accept="image/*" required hidden onchange="previewImage(event)">
+                </label>
+
+                <div class="image-preview">
+                    <img id="preview" src="{{ uploaded_image }}" alt="Preview">
+                </div>
+
+                {% if prediction %}
+                <div class="prediction-box" id="prediction-box">
+                    <strong>Prediction:</strong> {{ prediction }}
+                </div>
+                {% endif %}
+
+                <label for="suggestion">Suggestion</label>
+                <textarea name="suggestion" placeholder="Your review" rows="4"></textarea>
+                <!-- before submit form  -->
+                <div class="button-group" id="orginal-button">
+                    <button type="button" class="clear-btn" onclick="clearForm()">Clear</button>
+                    <button type="submit" class="submit-btn" onclick="handleSubmit(event)">Submit</button>
+                </div>
+
+                <!-- Processing form  -->
+                <div id="loading-button" class="loading-wrapper" style="display: none;">
+                    <button class="loading-btn" disabled>
+                        <i class="fa fa-spinner fa-spin"></i> Processing...
+                    </button>
+                </div>
+
+                <!-- after submit form  -->
+                <div class="button-group" style="display: none;" id="post-submit-buttons">
+                    <button type="button" class="contact-btn" onclick="contact()">Contact</button>
+                    <button type="button" class="clear-btn" onclick="clearForm()">Clear</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% if show_post_buttons %}
+    <script>
+        document.getElementById('loading-button').style.display = 'none';
+        document.getElementById('orginal-button').style.display = 'none';
+        document.getElementById('post-submit-buttons').style.display = 'flex';
+    </script>
+    {% endif %}
+    <script>
+        const body = document.body;
+        const toggleButton = document.getElementById('toggle-theme');
+
+        // Load saved theme
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark');
+        }
+
+        toggleButton.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            const theme = body.classList.contains('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+        });
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            document.getElementById("orginal-button").style.display = 'none';
+            document.getElementById("loading-button").style.display = 'contents';
+
+            setTimeout(() => {
+                event.target.closest('form').submit();
+            }, 300);
+        }
+
+        function contact() {
+            alert("Redirecting to contact...");
+            // window.location.href = '/contact'; // If you have a real route
+        }
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                document.getElementById('preview').src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function clearForm() {
+            document.getElementById('preview').src = 'static/img/1.png';
+
+            const predictionBox = document.getElementById('prediction-box');
+            if (predictionBox) {
+                predictionBox.remove();
+            }
+
+            document.querySelector('textarea[name="suggestion"]').value = "";
+            document.querySelector('input[type="file"]').value = "";
+            window.location.href = "/";
+        }
+    </script>
+</body>
+
+</html>
