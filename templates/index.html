@@ -4,8 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Skin Disease Classifier</title>
+    <link rel="shortcut icon" href="static/img/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -18,23 +20,52 @@
 
         <div class="form-box">
             <form method="POST" enctype="multipart/form-data">
-                <label class="upload-btn">
-                    <i class="fa-solid fa-camera"></i> UPLOAD IMAGE
-                    <input type="file" name="image" accept="image/*" required hidden onchange="previewImage(event)">
-                </label>
+                <div class="logo-title">
+                    <span class="skin">Skin</span>
+                    <span class="slash">/</span>
+                    <span class="doctor">DOCTOR</span>
+                </div>
+                <!-- Upload Area Wrapper -->
+                <div id="upload-container" class="upload-container">
+                    <div class="upload-box" id="upload-box">
+                        <input type="file" name="image" id="file-input" accept="image/*" hidden>
+                        <input type="file" accept="image/*" capture="environment" id="camera-input" hidden>
 
-                <div class="image-preview">
-                    <img id="preview" src="{{ uploaded_image }}" alt="Preview">
+                        <div class="upload-content">
+                            <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                            <p>Drag & Drop to Upload File</p>
+                            <span>OR</span>
+                            <div class="button-group">
+                                <button type="button" class="browse-btn" onclick="fileInput.click()">Browse
+                                    File</button>
+                                <button type="button" class="camera-btn" onclick="cameraInput.click()">Open
+                                    Camera</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image Preview (always present but hidden initially) -->
+                <div class="image-preview" id="image-preview" style="display: none;">
+                    <img id="preview" src="{{uploaded_image}}" alt="Preview">
                 </div>
 
                 {% if prediction %}
                 <div class="prediction-box" id="prediction-box">
                     <strong>Prediction:</strong> {{ prediction }}
                 </div>
+                {% elif error %}
+                <div class="prediction-box" id="prediction-box">
+                    <strong>Error:</strong> {{ error }}
+                </div>
                 {% endif %}
 
                 <label for="suggestion">Suggestion</label>
-                <textarea name="suggestion" placeholder="Your review" rows="4"></textarea>
+                <textarea name="suggestion" placeholder="The Suggestion about Your Helth" rows="4" readonly>{% if confidence == -1 %}The Suggestion about Your Helth
+                {% elif confidence*100 < 85 %}The model is unsure about this result.
+Please consider consulting a certified skin professional.{{confidence}}
+                {% else %}{{suggestion}}
+            {% endif %}</textarea>
                 <!-- before submit form  -->
                 <div class="button-group" id="orginal-button">
                     <button type="button" class="clear-btn" onclick="clearForm()">Clear</button>
@@ -61,6 +92,8 @@
         document.getElementById('loading-button').style.display = 'none';
         document.getElementById('orginal-button').style.display = 'none';
         document.getElementById('post-submit-buttons').style.display = 'flex';
+        document.getElementById('upload-container').style.display = 'none';
+        document.getElementById('image-preview').style.display = 'block';
     </script>
     {% endif %}
     <script>
@@ -89,30 +122,26 @@
         }
 
         function contact() {
-            alert("Redirecting to contact...");
-            // window.location.href = '/contact'; // If you have a real route
+            // alert("Redirecting to contact...");
+            window.open('https://www.linkedin.com/in/gotsanjay/', '_blank');
         }
-        function previewImage(event) {
-            const reader = new FileReader();
-            reader.onload = function () {
-                document.getElementById('preview').src = reader.result;
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        }
-
         function clearForm() {
-            document.getElementById('preview').src = 'static/img/1.png';
+            document.getElementById('preview').src = '';
 
             const predictionBox = document.getElementById('prediction-box');
             if (predictionBox) {
                 predictionBox.remove();
             }
-
+            document.getElementById('image-preview').style.display = 'none';
+            document.getElementById('upload-container').style.display = 'block';
+            document.getElementById('file-input').value = '';
+            document.getElementById('camera-input').value = '';
             document.querySelector('textarea[name="suggestion"]').value = "";
             document.querySelector('input[type="file"]').value = "";
-            window.location.href = "/";
+            window.location.href = '/';
         }
     </script>
+    <script src="static/fileUpload.js"></script>
 </body>
 
 </html>
