@@ -10,6 +10,10 @@
     --upload-text: #ffffff;
     --clear-btn: #ff6666;
     --submit-btn: #7c5fff;
+    --upload-hover: rgb(8 81 255 / 51%);
+    --skin-color: #000;
+    --slash-color:#0057b7 ;
+    --doctor-color: #00bfff;
     --contact-btn: #2ecc71;
     --loading-btn: #3498db;
     --theme-button-bg: #1f2d4f;
@@ -26,7 +30,11 @@ body.dark {
     --prediction-bg: #3a3a3a;
     --upload-bg: #ffffff;
     --upload-text: #000000;
+    --upload-hover: rgb(21 45 102 / 47%);
     --clear-btn: #ff4444;
+    --skin-color:#ffffff;
+    --slash-color:#C7D200 ;
+    --doctor-color: #FDE365;
     --contact-btn: #2ecc71;
     --loading-btn: #3498db;
     --submit-btn: #6a4dff;
@@ -79,22 +87,64 @@ body {
     gap: 6px;
 }
 
-.upload-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-height: 5px;
-    background-color: var(--upload-bg);
-    color: var(--upload-text);
-    padding: 14px;
-    font-weight: bold;
-    border-radius: 30px;
-    margin-bottom: 10px;
+.upload-container {
+    border: 2px dashed var(--textarea-border);
+    border-radius: 16px;
+    padding: 30px 20px;
+    text-align: center;
+    background-color: var(--textarea-bg);
     cursor: pointer;
+    transition: background-color 0.01s, border-color 0.5s;
+    margin-bottom: 20px;
 }
 
-.upload-btn i {
-    margin-right: 10px;
+.upload-container:hover,
+.upload-container.dragover {
+    background-color: var(--upload-hover);
+    border-color: var(--submit-btn);
+
+}
+
+.upload-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-color);
+}
+
+.upload-icon {
+    font-size: 32px;
+    color: var(--submit-btn);
+}
+
+.upload-instructions {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.browse-btn,
+.camera-btn {
+    padding: 5px 10px;
+    font-size: 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin: 5px 5px 0;
+}
+
+.browse-btn {
+    background-color: var(--submit-btn);
+}
+
+.camera-btn {
+    background-color: #ff9800;
+}
+
+.camera-btn:hover {
+    background-color: #fb8c00;
 }
 
 .image-preview {
@@ -111,6 +161,7 @@ body {
 
 .image-preview img {
     width: 100%;
+    height: 100%;
     object-fit: cover;
 }
 
@@ -140,14 +191,14 @@ textarea {
 
 .clear-btn,
 .submit-btn,
-.contact-btn{
+.contact-btn {
     flex: 1;
     border: none;
     padding: 12px 0;
     font-size: 16px;
     border-radius: 20px;
     cursor: pointer;
-    color: white;
+    color:white;
     font-weight: bold;
 }
 
@@ -211,4 +262,55 @@ form {
     cursor: pointer;
     color: white;
     font-weight: bold;
+}
+
+.skin::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 16px;
+    width: 10px;
+    height: 30px;
+    background: var(--card-bg);
+    clip-path: polygon(100% 100%, 0% 100%, 100% 0%);
+    z-index: 20;
+}
+
+@font-face {
+    font-family: 'Aerospace';
+    src: url('font/Aerospace.ttf') format('truetype');
+    font-weight: bold;
+}
+
+.logo-title {
+    display: flex;
+    align-items: baseline;
+}
+
+.skin {
+    position: relative;
+    font-family: 'Aerospace', sans-serif;
+    font-weight: bold;
+    font-size: 2.5rem;
+    color: var(--skin-color);
+    transform: translateY(-12px);
+}
+
+.slash {
+    font-family: 'Aerospace', sans-serif;
+    font-weight: bold;
+    font-size: 2.8rem;
+    margin: 0 0.2rem;
+    color: var(--slash-color);
+    z-index: 3;
+    transform: translateX(-26px);
+}
+
+.doctor {
+    font-family: 'Unica One', sans-serif;
+    font-size: 3.0rem;
+    letter-spacing: 0.15em;
+    color: var(--doctor-color);
+    /* yellow: #ffd54f for dark */
+    transform: translate(-38px, 9px);
 }
