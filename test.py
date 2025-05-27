@@ -7,9 +7,12 @@ from tensorflow.keras.preprocessing import image
 import numpy as np
 
 # Load model once when this script is imported
-MODEL_PATH = r'D:\sanjay\Skin-Doctor\model\IncepV3-8-Class.h5'  # or the saved model path
+MODEL_PATH = r'model\IncepV3-8-Class.h5'  # or the saved model path
 model = tf.keras.models.load_model(MODEL_PATH)
+with open('model/OpenAPI.txt','r') as keyFile:
+    key = keyFile.read()
 
+API_KEY : str = key.strip()
 # Optional: class names if you have them
 CLASS_NAMES = ['BA- cellulitis', 'BA-impetigo', 'FU-athlete-foot', 'FU-nail-fungus', 'FU-ringworm', 'PA-cutaneous-larva-migrans', 'VI-chickenpox', 'VI-shingles']
 def model_predict(img_path):
@@ -22,4 +25,4 @@ def model_predict(img_path):
     confidence = np.max(preds)
 
     predicted_class = CLASS_NAMES[pred_idx] if CLASS_NAMES else str(pred_idx)
-    return f"{predicted_class} ({confidence:.2%} confidence)"
+    return f"{predicted_class} ({confidence:.2%} confidence)",confidence
