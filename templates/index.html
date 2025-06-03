@@ -4,20 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Skin Disease Classifier</title>
-    <link rel="shortcut icon" href="static/img/logo.png" type="image/x-icon">
+    <link rel="icon" href="static/img/logo.png">
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
-    <div class="theme-toggle top-left">
-        <button id="toggle-theme">
-            <i class="fa-solid fa-moon"></i> NIGHT
-        </button>
-    </div>
-    <div class="app-container">
+    <!-- canvas  -->
+    <canvas id="canvas"></canvas>
 
+    <!-- toggle theme  -->
+    <div class="theme-toggle top-left" id="toggle-theme">
+        <div class="toggle-slider"></div>
+        <div class="toggle-btn"></div>
+    </div>
+
+    <!-- info button -->
+    <div class="fixed-info-button" id="open-info">
+        <i class="fas fa-circle-info"> </i>
+    </div>
+
+    <!-- form  -->
+    <div class="app-container">
         <div class="form-box">
             <form method="POST" enctype="multipart/form-data">
                 <div class="logo-title">
@@ -29,16 +39,16 @@
                 <div id="upload-container" class="upload-container">
                     <div class="upload-box" id="upload-box">
                         <input type="file" name="image" id="file-input" accept="image/*" hidden>
-                        <input type="file" accept="image/*" capture="environment" id="camera-input" hidden>
+                        <input type="file" accept="image/*" capture="user" id="camera-input" hidden>
 
                         <div class="upload-content">
                             <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
                             <p>Drag & Drop to Upload File</p>
                             <span>OR</span>
                             <div class="button-group">
-                                <button type="button" class="browse-btn" onclick="fileInput.click()">Browse
+                                <button type="button" class="browse-btn btn" onclick="fileInput.click()">Browse
                                     File</button>
-                                <button type="button" class="camera-btn" onclick="cameraInput.click()">Open
+                                <button type="button" class="camera-btn btn" onclick="cameraInput.click()">Open
                                     Camera</button>
                             </div>
                         </div>
@@ -55,21 +65,21 @@
                     <strong>Prediction:</strong> {{ prediction }}
                 </div>
                 {% elif error %}
-                <div class="prediction-box" id="prediction-box">
+                <div class="error-message" id="error-message">
                     <strong>Error:</strong> {{ error }}
                 </div>
                 {% endif %}
 
                 <label for="suggestion">Suggestion</label>
                 <textarea name="suggestion" placeholder="The Suggestion about Your Helth" rows="4" readonly>{% if confidence == -1 %}The Suggestion about Your Helth
-                {% elif confidence*100 < 85 %}The model is unsure about this result.
-Please consider consulting a certified skin professional.{{confidence}}
+                {% elif confidence*100 < 85 %}Sorry, The model is unsure about this result.
+Please consider consulting a certified skin professional.
                 {% else %}{{suggestion}}
             {% endif %}</textarea>
                 <!-- before submit form  -->
                 <div class="button-group" id="orginal-button">
-                    <button type="button" class="clear-btn" onclick="clearForm()">Clear</button>
-                    <button type="submit" class="submit-btn" onclick="handleSubmit(event)">Submit</button>
+                    <button type="button" class="clear-btn btn" onclick="clearForm()">Clear</button>
+                    <button type="submit" class="submit-btn btn" onclick="handleSubmit(event)">Submit</button>
                 </div>
 
                 <!-- Processing form  -->
@@ -81,10 +91,26 @@ Please consider consulting a certified skin professional.{{confidence}}
 
                 <!-- after submit form  -->
                 <div class="button-group" style="display: none;" id="post-submit-buttons">
-                    <button type="button" class="contact-btn" onclick="contact()">Contact</button>
-                    <button type="button" class="clear-btn" onclick="clearForm()">Clear</button>
+                    <button type="button" class="contact-btn btn" onclick="contact()">Contact</button>
+                    <button type="button" class="clear-btn btn" onclick="clearForm()">Clear</button>
                 </div>
             </form>
+        </div>
+    </div>
+    <!-- info container  -->
+    <div id="info-overlay" class="container d-none">
+        <div class="offline-content text-center">
+            <i class="fas fa-circle-info"></i>
+            <h2 class="mt-4">About This App</h2>
+            <p>This app allows users to search, preview, and download categorized images.</p>
+            <p>Auto background cleanup runs every 15 minutes.</p>
+            <p>Fully responsive, light/dark themed, built with Flask + JS</p>
+            <div>
+                <a class="info-connect-btn btn" href="https://www.linkedin.com/in/gotsanjay/" target="_blank">
+                    <i class="fab fa-linkedin"></i> linkedin
+                </a>
+                <button id="close-info" class="close-info btn"><i class="fas fa-times"></i> Close</button>
+            </div>
         </div>
     </div>
     {% if show_post_buttons %}
@@ -140,8 +166,43 @@ Please consider consulting a certified skin professional.{{confidence}}
             document.querySelector('input[type="file"]').value = "";
             window.location.href = '/';
         }
+        const infoContainer = document.getElementById('info-overlay');
+        const openInfoButton = document.getElementById('open-info');
+        const closeInfoButton = document.getElementById('close-info');
+
+        openInfoButton.addEventListener('click', () => {
+            infoContainer.style.display = 'flex';
+        });
+
+        closeInfoButton.addEventListener('click', () => {
+            infoContainer.style.display = 'none';
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeInfoButton.click();
+            }
+        });
     </script>
     <script src="static/fileUpload.js"></script>
+    <script src="static/reptile.js"></script>
+    <script>
+        $(document).ready(function () {
+            const $err = $('#error-message');
+            if ($err) {
+                $err.fadeIn(300);
+                setTimeout(() => {
+                    $err.animate(
+                        {
+                            opacity: 0,
+                            marginTop: '-40px',
+                            width: '0px',
+                            height: '0px'
+                        }, 600, () => $err.hide()
+                    );
+                }, 3000);
+            }
+        });
+    </script>
 </body>
 
 </html>
