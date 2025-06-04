@@ -9,11 +9,5 @@ skinENV/
 # Jupyter Notebook Checkpoints
 .ipynb_checkpoints/
 
-# Datasets
-dataset/
-*.h5
-*.npz
-
-
 #model
-model/
+*.txt
