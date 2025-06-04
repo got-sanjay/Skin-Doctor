@@ -2,7 +2,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import os
 from werkzeug.utils import secure_filename
-from test import model_predict,API_KEY
+from test import model_predict
 from openai import OpenAI
 from apscheduler.schedulers.background import BackgroundScheduler
 import logging
@@ -10,6 +10,7 @@ import logging
 app = Flask(__name__)
 UPLOAD_FOLDER = 'static/uploaded_images'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+API_KEY = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=API_KEY)
 # Ensure the upload folder exists
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -91,6 +92,7 @@ if __name__ == '__main__':
     scheduler.add_job(func=lambda: app.app_context().push() or clear_upload_folder(), trigger="interval", minutes=20)
     scheduler.start()
     try:
-        app.run(host='0.0.0.0', debug=True)
+        port = int(os.environ.get("PORT", 5000))
+        app.run(host='0.0.0.0', port=port)
     except (KeyboardInterrupt, SystemExit):
         scheduler.shutdown()

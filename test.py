@@ -9,10 +9,12 @@ import numpy as np
 # Load model once when this script is imported
 MODEL_PATH = 'model/IncepV3-8-Class.h5'  # or the saved model path
 model = tf.keras.models.load_model(MODEL_PATH)
-with open('model/OpenAPI.txt','r') as keyFile:
-    key = keyFile.read()
 
-API_KEY : str = key.strip()
+# with open('model/OpenAPI.txt','r') as keyFile:
+#     key = keyFile.read()
+
+# API_KEY : str = key.strip()
+
 # Optional: class names if you have them
 CLASS_NAMES = ['BA- cellulitis', 'BA-impetigo', 'FU-athlete-foot', 'FU-nail-fungus', 'FU-ringworm', 'PA-cutaneous-larva-migrans', 'VI-chickenpox', 'VI-shingles']
 def model_predict(img_path):

@@ -9,3 +9,5 @@ skinENV/
 # Jupyter Notebook Checkpoints
 .ipynb_checkpoints/
 
+#model
+*.txt
