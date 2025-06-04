@@ -402,5 +402,5 @@ function updateStrokeColor() {
 var legNum = Math.floor(1 + Math.random() * 12)
 SIZE = 2
 LEGS = 10
-TAIL = 16
+TAIL = 26
 setupLizard(SIZE,LEGS,TAIL)

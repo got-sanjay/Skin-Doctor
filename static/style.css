@@ -342,17 +342,6 @@ form {
     font-weight: bold;
 }
 
-.skin::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    bottom: 16px;
-    width: 10px;
-    height: 30px;
-    background: var(--card-bg);
-    clip-path: polygon(100% 100%, 0% 100%, 100% 0%);
-    z-index: 20;
-}
 
 @font-face {
     font-family: 'Aerospace';
@@ -372,6 +361,7 @@ form {
     font-size: 2.5rem;
     color: var(--skin-color);
     transform: translateY(-12px);
+    clip-path: path('M 0 0 H 100 V 100 H 0 Z');
 }
 
 .slash {
