@@ -4,7 +4,8 @@ import os
 from werkzeug.utils import secure_filename
 from test import model_predict,API_KEY
 from openai import OpenAI
-
+from apscheduler.schedulers.background import BackgroundScheduler
+import logging
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'static/uploaded_images'
@@ -12,6 +13,9 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 client = OpenAI(api_key=API_KEY)
 # Ensure the upload folder exists
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 def clear_upload_folder():
     folder = app.config['UPLOAD_FOLDER']
@@ -21,7 +25,7 @@ def clear_upload_folder():
             if os.path.isfile(file_path):
                 os.remove(file_path)
         except Exception as e:
-            print(f"Error deleting file {file_path}: {e}")
+            logger.warning(f'Error deleting file {file_path}: {e}')
             
 def generate_suggestion(diagnosis):
     prompt = f"What advice would you give to a patient diagnosed with {diagnosis}? Provide medical suggestions, treatment advice, or when to see a doctor."
@@ -83,4 +87,10 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(func=lambda: app.app_context().push() or clear_upload_folder(), trigger="interval", minutes=20)
+    scheduler.start()
+    try:
+        app.run(host='0.0.0.0', debug=True)
+    except (KeyboardInterrupt, SystemExit):
+        scheduler.shutdown()
