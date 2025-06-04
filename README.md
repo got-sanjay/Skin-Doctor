@@ -26,5 +26,5 @@ This is a web-based AI application that predicts skin diseases from uploaded ima
 
 1. **Clone the repo**  
 ```bash
-git clone https://github.com/your-username/skin-disease-classifier.git
+git clone https://github.com/got-sanjay/Skin-Doctor.git
 cd skin-disease-classifier
