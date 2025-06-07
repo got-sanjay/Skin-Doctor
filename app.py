@@ -38,8 +38,8 @@ def generate_suggestion(diagnosis):
                 {"role": "system", "content": "You are a medical assistant providing safe and responsible advice for skin conditions."},
                 {"role": "user", "content": prompt}
             ],
-            max_tokens=200,
-            temperature=0.5
+            max_tokens=250,
+            temperature=0.7
         )
         suggestion = response.choices[0].message.content.strip()
         return suggestion

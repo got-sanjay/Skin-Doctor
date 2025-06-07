@@ -72,7 +72,7 @@
                 {% endif %}
 
                 <label for="suggestion">Suggestion</label>
-                <textarea name="suggestion" placeholder="The Suggestion about Your Health" rows="10" readonly>{% if confidence == -1 %}The Suggestion about Your Helth
+                <textarea name="suggestion" placeholder="The Suggestion about Your Health" rows="8" readonly>{% if confidence == -1 %}The Suggestion about Your Health
                 {% elif confidence*100 < 85 %}Sorry, The model is unsure about this result.
 Please consider consulting a certified skin professional.
                 {% else %}{{suggestion}}
