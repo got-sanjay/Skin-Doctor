@@ -21,11 +21,9 @@ fileInput.addEventListener('change', () => {
         previewFile(fileInput.files[0])};
 });
 
-cameraInput.addEventListener('change', () => {
-    if (cameraInput.files[0]) {
-        previewFile(cameraInput.files[0]);
-        }
-});
+function openCamera() {
+    document.getElementById('camera-input').click();
+}
 
 uploadBox.addEventListener('dragover', (e) => {
     e.preventDefault();
