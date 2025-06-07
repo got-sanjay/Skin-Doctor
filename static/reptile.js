@@ -27,7 +27,7 @@ document.addEventListener("mousemove", function (event) {
 
 document.addEventListener("touchmove",function(event){
 	Input.mouse.x =event.touches[0].clientX
-  Input.mouse.x =event.touches[0].clientX
+  Input.mouse.y =event.touches[0].clientY
 })
 
 //Necessary classes
