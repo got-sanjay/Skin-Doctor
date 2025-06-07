@@ -25,6 +25,17 @@ function openCamera() {
     document.getElementById('camera-input').click();
 }
 
+cameraInput.addEventListener('change', () => {
+    if (cameraInput.files[0]) {
+        // Copy the camera file into file-input so it uploads
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(cameraInput.files[0]);
+        fileInput.files = dataTransfer.files;
+
+        previewFile(cameraInput.files[0]);
+    }
+});
+
 uploadBox.addEventListener('dragover', (e) => {
     e.preventDefault();
     uploadBox.classList.add('dragover');

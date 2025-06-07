@@ -545,4 +545,7 @@ canvas {
         font-size: 24px;
         top: 9px;
     }
+    .offline-content{
+        width: 70%;
+    }
 }
