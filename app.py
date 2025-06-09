@@ -1,5 +1,5 @@
 # app.py
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for,jsonify
 import os
 from werkzeug.utils import secure_filename
 from test import model_predict
@@ -85,7 +85,19 @@ def index():
         show_post_buttons=post_button,
         suggestion=suggestion
     )
+@app.route('/health')
+def health_check():
+    """Simple health check endpoint"""
+    return jsonify({"status": "healthy", "memory_mb": get_memory_usage()})
 
+def get_memory_usage():
+    """Get current memory usage in MB"""
+    try:
+        import psutil
+        process = psutil.Process(os.getpid())
+        return round(process.memory_info().rss / 1024 / 1024, 2)
+    except:
+        return "N/A"
 
 if __name__ == '__main__':
     scheduler = BackgroundScheduler()
