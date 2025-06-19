@@ -29,17 +29,17 @@ def clear_upload_folder():
             logger.warning(f'Error deleting file {file_path}: {e}')
             
 def generate_suggestion(diagnosis):
-    prompt = f"What advice would you give to a patient diagnosed with {diagnosis}? Provide medical suggestions, treatment advice, or when to see a doctor."
+    prompt = f"Brief medical advice for {diagnosis}:"
 
     try:
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": "You are a medical assistant providing safe and responsible advice for skin conditions."},
+                {"role": "system", "content": "Provide brief, safe medical advice for skin conditions."},
                 {"role": "user", "content": prompt}
             ],
-            max_tokens=250,
-            temperature=0.7
+            max_tokens=300,
+            temperature=0.5
         )
         suggestion = response.choices[0].message.content.strip()
         return suggestion

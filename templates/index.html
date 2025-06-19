@@ -72,7 +72,7 @@
                 {% endif %}
 
                 <label for="suggestion">Suggestion</label>
-                <textarea name="suggestion" placeholder="The Suggestion about Your Health" rows="8" readonly>{% if confidence == -1 %}The Suggestion about Your Health
+                <textarea name="suggestion" placeholder="The Suggestion about Your Health" rows="8" id="suggestion" oninput="autoResizeTextarea(this)" readonly>{% if confidence == -1 %}The Suggestion about Your Health
                 {% elif confidence*100 < 85 %}Sorry, The model is unsure about this result.
 Please consider consulting a certified skin professional.
                 {% else %}{{suggestion}}
@@ -137,7 +137,12 @@ Please consider consulting a certified skin professional.
             const theme = body.classList.contains('dark') ? 'dark' : 'light';
             localStorage.setItem('theme', theme);
         });
+        function autoResizeTextarea(textarea){
+            // text area adjustment
+            textarea.style.height='auto';
+            textarea.style.height=textarea.scrollHeight + 'px';
 
+        }
         function handleSubmit(event) {
             event.preventDefault();
             document.getElementById("orginal-button").style.display = 'none';
