@@ -4,3 +4,9 @@
 # Ignore IPython-related files
 **/.ipynb_checkpoints/
 *.ipynb
+
+#ignore readme and licence 
+README
+README.*
+LICENSE
+LICENSE.*
