@@ -3,17 +3,8 @@ tensorflow==2.19.0
 
 # Data handling
 numpy==1.26.4
-pandas==2.2.2
 
-# Image processing
-pillow==10.3.0
-
-# Visualization
-matplotlib==3.8.4
-
-# Scientific computing
-scipy==1.13.0
-
+# Application API
 Flask==3.1.1
 openai== 1.82.0
 apscheduler==3.11.0
