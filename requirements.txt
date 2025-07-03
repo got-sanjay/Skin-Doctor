@@ -14,15 +14,6 @@ matplotlib==3.8.4
 # Scientific computing
 scipy==1.13.0
 
-# Machine learning utilities
-scikit-learn==1.4.2
-
-# HDF5 file format support (for model saving/loading)
-h5py==3.11.0
-
-# Optional: For notebook support during development
-jupyterlab==4.1.6
-
 Flask==3.1.1
 openai== 1.82.0
 apscheduler==3.11.0
