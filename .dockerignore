@@ -1,0 +1,6 @@
+# Ignore any directory named skinVenv (anywhere in the project)
+**/skinVenv/
+
+# Ignore IPython-related files
+**/.ipynb_checkpoints/
+*.ipynb
