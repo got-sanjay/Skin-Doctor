@@ -8,3 +8,7 @@ skinENV/
 
 # Jupyter Notebook Checkpoints
 .ipynb_checkpoints/
+
+imageAgumentation.py
+
+*ipynb
