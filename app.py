@@ -104,7 +104,6 @@ if __name__ == '__main__':
     scheduler.add_job(func=lambda: app.app_context().push() or clear_upload_folder(), trigger="interval", minutes=20)
     scheduler.start()
     try:
-        port = int(os.environ.get("PORT", 5000))
-        app.run(host='0.0.0.0', port=port)
+        app.run(host='0.0.0.0', port=5000)
     except (KeyboardInterrupt, SystemExit):
         scheduler.shutdown()
